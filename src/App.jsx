@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar"; // Tetap dibiarkan jika sewaktu-waktu lu butuh
 
 function App() {
   // 1. STATE: Buat ngingat apakah layar udah di-scroll atau belum
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // TAMBAHAN STATE: Buat pemicu buka-tutup hamburger menu di Android/HP
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // 2. EFFECT: Buat mantau pergerakan scroll si user
   useEffect(() => {
@@ -41,42 +45,130 @@ function App() {
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col selection:bg-white selection:text-black">
-      {/* NAVBAR: Tingginya (py) dan Background-nya bakal berubah otomatis lewat dynamic className */}
+      {/* ==================== SEKSI NAVBAR MODIFIKASI ==================== */}
       <header
-        className={`fixed top-0 left-0 w-full z-50 px-8 md:px-16 flex justify-between items-center transition-all duration-500 ease-in-out ${
-          isScrolled
-            ? "py-1 bg-black/80 backdrop-blur-md border-b border-neutral-900/50"
+        className={`fixed top-0 left-0 w-full z-50 px-8 md:px-16 transition-all duration-500 ease-in-out ${
+          isScrolled || isMenuOpen
+            ? "py-2 bg-black/90 backdrop-blur-md border-b border-neutral-900/50"
             : "py-8 bg-transparent border-b border-transparent"
         }`}>
-        <h1 className="text-sm font-bold tracking-[0.3em] uppercase">
-          PORTO.LU
-        </h1>
+        {/* Baris Utama Logo + Menu */}
+        <div className="flex justify-between items-center w-full">
+          <h1 className="text-sm font-bold tracking-[0.3em] uppercase">
+            PORTO.LU
+          </h1>
 
-        <nav className="space-x-6 text-xs uppercase tracking-widest text-neutral-400">
-          <a
-            href="#home"
-            className="hover:text-white transition-colors duration-300">
-            Home
-          </a>
-          <a
-            href="#projects"
-            className="hover:text-white transition-colors duration-300">
-            Projects
-          </a>
-          <a
-            href="#about"
-            className="hover:text-white transition-colors duration-300">
-            About
-          </a>
-          <a
-            href="#contact"
-            className="hover:text-white transition-colors duration-300">
-            Contact
-          </a>
-        </nav>
+          {/* MENU DESKTOP: Sekarang dikasih 'hidden md:flex' biar otomatis ngumpet pas di layar HP */}
+          <nav className="hidden md:flex space-x-6 text-xs uppercase tracking-widest text-neutral-400">
+            <a
+              href="#home"
+              className="hover:text-white transition-colors duration-300">
+              Home
+            </a>
+            <a
+              href="#projects"
+              className="hover:text-white transition-colors duration-300">
+              Projects
+            </a>
+            <a
+              href="#about"
+              className="hover:text-white transition-colors duration-300">
+              About
+            </a>
+            <a
+              href="#credentials"
+              className="hover:text-white transition-colors duration-300">
+              Skills & Certs
+            </a>
+            <a
+              href="#contact"
+              className="hover:text-white transition-colors duration-300">
+              Contact
+            </a>
+          </nav>
+
+          {/* TOMBOL HAMBURGER: Cuma muncul di layar HP / Android ('md:hidden') */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden text-neutral-400 hover:text-white transition-colors focus:outline-none"
+            aria-label="Toggle Menu">
+            {isMenuOpen ? (
+              // Icon Silang (X) yang elegan saat menu terbuka
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              // Icon Garis Tiga Minimalis saat menu tertutup
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        {/* MENU DROPDOWN MOBILE: Meluncur halus ke bawah pakai animasi transisi */}
+        <div
+          className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+            isMenuOpen
+              ? "max-h-64 opacity-100 pt-6"
+              : "max-h-0 opacity-0 pointer-events-none"
+          }`}>
+          <nav className="flex flex-col space-y-4 text-xs uppercase tracking-widest text-neutral-400 pb-2">
+            {/* Setiap link dikasih onClick={() => setIsMenuOpen(false)} supaya dropdown menutup otomatis begitu menunya di-klik */}
+            <a
+              href="#home"
+              onClick={() => setIsMenuOpen(false)}
+              className="hover:text-white transition-colors duration-300">
+              Home
+            </a>
+            <a
+              href="#projects"
+              onClick={() => setIsMenuOpen(false)}
+              className="hover:text-white transition-colors duration-300">
+              Projects
+            </a>
+            <a
+              href="#about"
+              onClick={() => setIsMenuOpen(false)}
+              className="hover:text-white transition-colors duration-300">
+              About
+            </a>
+            <a
+              href="#credentials"
+              onClick={() => setIsMenuOpen(false)}
+              className="hover:text-white transition-colors duration-300">
+              Skills & Certs
+            </a>
+            <a
+              href="#contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="hover:text-white transition-colors duration-300">
+              Contact
+            </a>
+          </nav>
+        </div>
       </header>
+      {/* ==================== AKHIR SEKSI NAVBAR ==================== */}
 
-      {/* MAIN CONTENT */}
+      {/* MAIN CONTENT (Aman tidak ada perubahan struktural sama sekali) */}
       <main className="max-w-5xl w-full mx-auto px-8 md:px-16 space-y-40 pt-32 pb-20 flex-1">
         {/* HERO SECTION */}
         <section
@@ -127,7 +219,7 @@ function App() {
                     <h4 className="text-sm font-medium tracking-wide uppercase">
                       {project.title}
                     </h4>
-                    <p className="text-xs text-neutral-500 text-left">
+                    <p className="text-xs text-neutral-400 text-left">
                       {project.category}
                     </p>
                   </div>
@@ -153,6 +245,160 @@ function App() {
             tulisan dan karya-karya lu.
           </p>
         </section>
+
+        {/* SKILLS & CERTIFICATES SECTION */}
+        <section
+          id="credentials"
+          className="scroll-mt-24 border-t border-neutral-900 pt-16 space-y-20">
+          {/* SUB-SECTION: TECH STACK */}
+          <div className="space-y-8">
+            <div className="flex justify-between items-end border-b border-neutral-900 pb-4">
+              <h3 className="text-xs uppercase tracking-[0.3em] text-neutral-400">
+                Capabilities
+              </h3>
+              <span className="text-[10px] text-neutral-600 font-mono">
+                My Tech Stack & Expertise
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* SKILL 1: JAVASCRIPT */}
+              <div className="border border-neutral-950 p-6 bg-neutral-950/20 hover:border-neutral-800 hover:bg-neutral-950/60 transition-all duration-300 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                      alt="JavaScript"
+                      className="w-6 h-6 grayscale hover:grayscale-0 transition-all duration-300"
+                    />
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-200">
+                      JavaScript (ES6+)
+                    </h4>
+                  </div>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
+                    Menguasai logika dasar hingga tingkat lanjut, manipulasi
+                    DOM, pemrosesan data Array/Object, serta pemrograman
+                    asynchronous (Fetch API / Axios).
+                  </p>
+                </div>
+              </div>
+
+              {/* SKILL 2: REACT */}
+              <div className="border border-neutral-950 p-6 bg-neutral-950/20 hover:border-neutral-800 hover:bg-neutral-950/60 transition-all duration-300 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                      alt="React"
+                      className="w-6 h-6 grayscale hover:grayscale-0 transition-all duration-300"
+                    />
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-200">
+                      React.js
+                    </h4>
+                  </div>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
+                    Bisa membangun aplikasi web Single Page Application (SPA)
+                    yang dinamis, menerapkan konsep reusable components, React
+                    Hooks, dan efisiensi state management.
+                  </p>
+                </div>
+              </div>
+
+              {/* SKILL 3: TAILWIND CSS */}
+              <div className="border border-neutral-950 p-6 bg-neutral-950/20 hover:border-neutral-800 hover:bg-neutral-950/60 transition-all duration-300 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+                      alt="Tailwind CSS"
+                      className="w-6 h-6 grayscale hover:grayscale-0 transition-all duration-300"
+                    />
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-200">
+                      Tailwind CSS
+                    </h4>
+                  </div>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
+                    Mampu melakukan slicing desain UI (dari Figma) menjadi kode
+                    web yang presisi, responsive (mobile-first), dengan
+                    penulisan utility classes yang rapi.
+                  </p>
+                </div>
+              </div>
+
+              {/* SKILL 4: NODE.JS */}
+              <div className="border border-neutral-950 p-6 bg-neutral-950/20 hover:border-neutral-800 hover:bg-neutral-950/60 transition-all duration-300 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                      alt="Node.js"
+                      className="w-6 h-6 grayscale hover:grayscale-0 transition-all duration-300"
+                    />
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-200">
+                      Node & Express
+                    </h4>
+                  </div>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
+                    Bisa membuat server backend dengan arsitektur RESTful API,
+                    mengelola routing, sistem middleware, serta menangani proses
+                    autentikasi dasar.
+                  </p>
+                </div>
+              </div>
+
+              {/* SKILL 5: GIT & GITHUB */}
+              <div className="border border-neutral-950 p-6 bg-neutral-950/20 hover:border-neutral-800 hover:bg-neutral-950/60 transition-all duration-300 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+                      alt="Git"
+                      className="w-6 h-6 grayscale hover:grayscale-0 transition-all duration-300"
+                    />
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-200">
+                      Version Control
+                    </h4>
+                  </div>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
+                    Terbiasa menggunakan Git untuk manajemen versi kode, proses
+                    pencabangan (branching), dokumentasi commit yang rapi, dan
+                    kolaborasi via GitHub.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* SERTIFIKAT GAMELAB - FRONTEND */}
+          <div className="py-5 flex justify-between items-start group">
+            <div>
+              <h4 className="text-sm font-medium text-white group-hover:text-neutral-400 transition-colors duration-300">
+                Industrial Internship / PKL — Frontend Web Developer
+              </h4>
+              <p className="text-xs text-neutral-500 mt-1">
+                Gamelab Indonesia — 2025
+              </p>
+              <p className="text-[11px] text-neutral-400 mt-2 max-w-xl leading-relaxed">
+                Sertifikasi kompetensi atas penyelesaian program magang industri
+                secara intensif. Berhasil menyelesaikan proyek berbasis web
+                dengan fokus pada implementasi logika JavaScript, *responsive
+                design*, serta penerapan *Git version control* sesuai standar
+                industri.
+              </p>
+            </div>
+            <a
+              href="public/certificate/sertifikat.png"
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-neutral-500 hover:text-white flex items-center gap-1 font-mono transition-colors duration-300 pt-1">
+              VERIFY{" "}
+              <span className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                ↗
+              </span>
+            </a>
+          </div>
+        </section>
+
         {/* CONTACT SECTION */}
         <section
           id="contact"
