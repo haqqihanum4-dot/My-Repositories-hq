@@ -168,30 +168,69 @@ function App() {
       </header>
       {/* ==================== AKHIR SEKSI NAVBAR ==================== */}
 
-      {/* MAIN CONTENT (Aman tidak ada perubahan struktural sama sekali) */}
+      {/* MAIN CONTENT */}
       <main className="max-w-5xl w-full mx-auto px-8 md:px-16 space-y-40 pt-32 pb-20 flex-1">
-        {/* HERO SECTION */}
+        {/* ==================== HERO SECTION UPGRADED ==================== */}
         <section
           id="home"
-          className="space-y-6 pt-12 min-h-[60vh] flex flex-col justify-center items-start">
-          <p className="text-xs uppercase tracking-[0.5em] text-neutral-500 font-semibold">
-            Frontend Developer / Designer
+          className="relative space-y-8 pt-16 md:pt-28 min-h-[75vh] flex flex-col justify-center items-start text-left overflow-hidden">
+          {/* Efek Pendaran Cahaya Halus di Background (RAM Friendly, No Lagging) */}
+          <div className="absolute top-1/3 left-0 -z-10 w-72 h-72 bg-neutral-900/40 rounded-full blur-[130px] pointer-events-none" />
+
+          {/* Indikator Status Aktif (Blinking Badge) */}
+          <div className="inline-flex items-center gap-2.5 border border-neutral-800 bg-neutral-950/60 px-3.5 py-1.5 rounded-full backdrop-blur-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-mono">
+              Available for full-time / projects
+            </p>
+          </div>
+
+          {/* Nama & Tipografi Judul Utama - Pakai text-left */}
+          <div className="space-y-4 max-w-4xl text-left">
+            <p className="text-xs uppercase tracking-[0.4em] text-neutral-500 font-semibold text-left">
+              Haqqi Hanum — Based in Indonesia
+            </p>
+            <h2 className="text-4xl sm:text-6xl md:text-8xl font-light tracking-tight leading-[1.05] uppercase text-left">
+              Crafting Clean <br />
+              <span className="font-normal text-neutral-400">Code </span>
+              <span className="font-serif italic text-neutral-500 lowercase font-medium">
+                &
+              </span>{" "}
+              Minimal <br />
+              <span className="font-semibold tracking-tighter text-white bg-gradient-to-r from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
+                Interfaces.
+              </span>
+            </h2>
+          </div>
+
+          {/* Deskripsi Singkat Singkat & Padat - Pakai text-left */}
+          <p className="text-neutral-400 max-w-xl text-sm md:text-base leading-relaxed font-light text-left">
+            Saya adalah Frontend Developer yang berfokus pada performa tinggi,
+            slicing desain yang presisi, serta arsitektur kode yang rapi.
+            Mengubah kompleksitas menjadi pengalaman digital yang intuitif.
           </p>
-          <h2 className="text-4xl md:text-7xl font-light tracking-tight leading-none">
-            BUILDING DIGITAL <br />
-            <span className="font-medium text-neutral-400">EXPERIENCES.</span>
-          </h2>
-          <div className="pt-4">
+
+          {/* Pasangan Tombol Call to Action (CTA) */}
+          <div className="pt-2 flex flex-wrap gap-4 items-center justify-start">
             <a
               href="#projects"
-              className="group inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] border border-neutral-800 px-6 py-3 hover:bg-white hover:text-black transition-all duration-500">
+              className="group inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] bg-white text-black font-medium px-6 py-3.5 hover:bg-neutral-200 transition-all duration-300">
               View My Work
-              <span className="transform group-hover:translate-x-2 transition-transform duration-300">
+              <span className="transform group-hover:translate-x-1.5 transition-transform duration-300">
                 →
               </span>
             </a>
+            <a
+              href="#contact"
+              className="group inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] border border-neutral-800 px-6 py-3.5 text-neutral-400 hover:border-neutral-500 hover:text-white transition-all duration-300">
+              Let's Talk
+            </a>
           </div>
         </section>
+        {/* ==================== AKHIR HERO SECTION UPGRADED ==================== */}
 
         {/* PROJECTS SECTION */}
         <section id="projects" className="space-y-12 scroll-mt-24">
@@ -235,8 +274,8 @@ function App() {
         {/* ABOUT SECTION */}
         <section
           id="about"
-          className="scroll-mt-24 border-t border-neutral-900 pt-16 flex flex-col items-center text-center">
-          <h3 className="text-xs uppercase tracking-[0.3em] text-neutral-400 mb-6">
+          className="scroll-mt-24 border-t border-neutral-900 pt-16 flex flex-col items-left text-left">
+          <h3 className="text-xs uppercase tracking-[0.3em] text-neutral-400 mb-6 text-left">
             About Me
           </h3>
           <p className="text-neutral-400 max-w-2xl text-sm leading-relaxed">
@@ -370,7 +409,7 @@ function App() {
           </div>
 
           {/* SERTIFIKAT GAMELAB - FRONTEND */}
-          <div className="py-5 flex justify-between items-start group">
+          <div className="py-5 flex justify-between items-start group text-left">
             <div>
               <h4 className="text-sm font-medium text-white group-hover:text-neutral-400 transition-colors duration-300">
                 Industrial Internship / PKL — Frontend Web Developer
